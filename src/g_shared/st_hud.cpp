@@ -674,8 +674,12 @@ void HUD_DrawCoopInfo( void )
 		return;
 
 	// [BB] Only draw the info if this is a cooperative or team based game mode. Further don't draw this in single player.
-	if ( !( GAMEMODE_GetCurrentFlags() & ( GMF_COOPERATIVE | GMF_PLAYERSONTEAMS )) || ( NETWORK_GetState() == NETSTATE_SINGLE ))
+	// [AK] But still draw the info in a clientside demo.
+	if ((( GAMEMODE_GetCurrentFlags( ) & ( GMF_COOPERATIVE | GMF_PLAYERSONTEAMS )) == false ) ||
+		(( NETWORK_GetState( ) == NETSTATE_SINGLE ) && ( CLIENTDEMO_IsPlaying( ) == false )))
+	{
 		return;
+	}
 
 	FString drawString;
 
